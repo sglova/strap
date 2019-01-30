@@ -1,0 +1,6 @@
+.idea
+.DS_store
+__pycache__
+
+# Ansible retry files
+*.retry
