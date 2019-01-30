@@ -1,4 +1,4 @@
 ---
 - src: https://github.com/lhazlewood/ansible-role-liquidprompt
   version: '0.1'
-  name: "lhazlewood.liquidprompt"
+  name: lhazlewood.liquidprompt
