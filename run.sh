@@ -24,6 +24,12 @@ unset -f $(compgen -A function strap)
 export ANSIBLE_ROLES_PATH="${HOME}/.strap/ansible/roles"
 mkdir -p "${ANSIBLE_ROLES_PATH}"
 
+dir="${HOME}/.strap/ansible/playbooks/geerlingguy/mac-dev-playbook"
+rm -rf "${dir}"
+mkdir -p "${dir}"
+git clone "https://github.com/geerlingguy/mac-dev-playbook.git" "${dir}"
+cp "${STRAP_HOOK_PACKAGE_DIR}/config.yml" "${dir}"
+
 # Since the Ansible 'control node' is the same as the 'target node' (i.e. localhost) for our use case of bootstrapping
 # our own laptop, ensure that ansible tasks use the exact same python interpreter that we use to run ansible-playbook.
 # This ensures that we have a consistent python runtime for everything during the ansible run.
@@ -32,8 +38,9 @@ mkdir -p "${ANSIBLE_ROLES_PATH}"
 # the python path.  Then we set that via the '-e' flag when invoking ansible playbook below.
 ansible_python_interpreter="$(head -n1 "$(which ansible-playbook)" | sed 's/#!//g')"
 
-ansible-galaxy install -r "${STRAP_HOOK_PACKAGE_DIR}/requirements.yml" -p "${ANSIBLE_ROLES_PATH}"
-# STRAP_HOME and STRAP_HOOK_PACKAGE_DIR are set by strap before calling this run.sh script, so we can reference them:
-ansible-playbook -i "${STRAP_HOME}/etc/ansible/hosts" \
+ansible-galaxy install -r "${dir}/requirements.yml" -p "${ANSIBLE_ROLES_PATH}"
+printf "\nRunning Ansible.  Please enter your " # make -K prompt more visible/obvious
+ansible-playbook -i "${dir}/inventory" \
                  -e "ansible_python_interpreter=${ansible_python_interpreter}" \
-                 "${STRAP_HOOK_PACKAGE_DIR}/main.yml"
+                 -K \
+                 "${dir}/main.yml"
