@@ -50,6 +50,7 @@ homebrew_taps:
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
+  - iterm2
 #- chromedriver
 #- docker
 #- dropbox
