@@ -12,6 +12,7 @@ dotfiles_repo_local_destination: "{{ ansible_env.HOME }}/projects/lhazlewood/dot
 dotfiles_files:
   - .bash_profile
   - .bashrc
+  - .osx
   - .zshenv
   - .zshrc
 
