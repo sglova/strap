@@ -8,7 +8,7 @@ configure_osx: no
 
 dotfiles_repo: https://github.com/lhazlewood/dotfiles.git
 dotfiles_repo_accept_hostkey: yes
-dotfiles_repo_local_destination: ~/Dropbox/projects/lhazlewood/dotfiles
+dotfiles_repo_local_destination: "{{ ansible_env.HOME }}/projects/lhazlewood/dotfiles"
 dotfiles_files:
   - .bash_profile
   - .bashrc
